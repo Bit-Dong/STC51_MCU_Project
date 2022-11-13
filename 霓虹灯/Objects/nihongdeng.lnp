@@ -1,0 +1,3 @@
+".\Objects\nihongdeng.obj" 
+TO ".\Objects\nihongdeng" 
+PRINT(".\Listings\nihongdeng.m51") RAMSIZE(256) 

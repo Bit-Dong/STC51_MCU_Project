@@ -1,0 +1,7 @@
+".\Objects\T.obj",
+".\Objects\Delay.obj",
+".\Objects\DS18B20.obj",
+".\Objects\LCD1602.obj",
+".\Objects\OneWire.obj" 
+TO ".\Objects\T" 
+PRINT(".\Listings\T.m51") RAMSIZE(256) 
