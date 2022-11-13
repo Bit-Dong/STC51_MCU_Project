@@ -1,0 +1,367 @@
+C51 COMPILER V9.54   TANCHISHE                                                             04/18/2022 20:16:51 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE TANCHISHE
+OBJECT MODULE PLACED IN .\Objects\tanchishe.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE tanchishe.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings
+                    -\tanchishe.lst) TABS(2) OBJECT(.\Objects\tanchishe.obj)
+
+line level    source
+
+   1          #include<reg52.h>         
+   2          #include<stdlib.h>          
+   3          #include<intrins.h>         
+   4          #define uchar unsigned char         
+   5          #define uint unsigned int         
+   6          #define max 20          
+   7          sbit key1=P3^1;         
+   8          sbit key2=P3^0;         
+   9          sbit key3=P3^2;         
+  10          sbit key4=P3^3;         
+  11          sbit SER=P3^4;          
+  12          sbit SLK=P3^5;          
+  13          sbit CLK=P3^6;          
+  14          sbit bee=P2^5;          
+  15          uint time=0,dir=1,flag=0;         
+  16          uint speed=30;          
+  17          uchar fdx,fdy;          
+  18          uchar line[max]=0;          
+  19          uchar column[max]=0xff;         
+  20          void delay(long a)          
+  21          {         
+  22   1        for(;--a;)        
+  23   1        {       
+  24   2        }       
+  25   1      }         
+  26          void timer_Init()                         //闹钟初始化   
+  27          {         
+  28   1        TMOD=0x01;        
+  29   1        TH0=(65536-50000)/256;        
+  30   1        TL0=(65536-50000)%256;        
+  31   1        EA=1;       
+  32   1        ET0=1;        
+  33   1        TR0=1;        
+  34   1      }         
+  35          void scan_level(uchar byte)                       //每列显示的结果         
+  36          {         
+  37   1        uint i=0;       
+  38   1        for(i=0;i<8;i++)        
+  39   1        {       
+  40   2      //    SER=byte>>7;      
+  41   2      //    byte=byte<<1;     
+  42   2          SER=byte&(0x80>>i);     
+  43   2          CLK=1;      
+  44   2          CLK=0;      
+  45   2        }       
+  46   1        SLK=1;        
+  47   1        SLK=0;        
+  48   1      }         
+  49          void display(uchar byte,uchar column)             //显示          
+  50          {         
+  51   1        scan_level(byte);       
+  52   1        P0=column;        
+  53   1        delay(10);        
+  54   1        P0=0xff;        
+C51 COMPILER V9.54   TANCHISHE                                                             04/18/2022 20:16:51 PAGE 2   
+
+  55   1      }         
+  56          void Turn_rigth(uint length)                      //右移          
+  57          {           
+  58   1        uint j;       
+  59   1        if(key4==0)       
+  60   1        {       
+  61   2          delay(10);      
+  62   2          if(key4==0)     
+  63   2          {     
+  64   3            if(dir!=3&&dir!=2)    
+  65   3            {   
+  66   4              time=0; 
+  67   4              dir=2;  
+  68   4              delay(5000);  
+  69   4              for(j=length-1;j>0;j--) 
+  70   4              { 
+  71   5                line[j]=line[j-1];
+  72   5                column[j]=column[j-1];
+  73   5              } 
+  74   4              if(column[0]==0xfe) 
+  75   4              { 
+  76   5                P0=0xff;
+  77   5                while(1);
+  78   5              } 
+  79   4              column[0]>>=1;  
+  80   4              column[0]+=0x80;  
+  81   4            }   
+  82   3          }     
+  83   2        }       
+  84   1        while(!key4);       
+  85   1        delay(10);        
+  86   1        while(!key4);       
+  87   1      }         
+  88          void Turn_down(uint length)                       //下移          
+  89          {         
+  90   1        uint j;       
+  91   1        if(key2==0)       
+  92   1        {       
+  93   2          delay(10);      
+  94   2          if(key2==0)     
+  95   2          {     
+  96   3            if(dir!=4&&dir!=1)    
+  97   3            {   
+  98   4              time=0; 
+  99   4              dir=1;  
+ 100   4              delay(5000);  
+ 101   4              for(j=length-1;j>0;j--) 
+ 102   4              { 
+ 103   5                line[j]=line[j-1];
+ 104   5                column[j]=column[j-1];
+ 105   5              } 
+ 106   4              if(line[0]==0x01) 
+ 107   4              { 
+ 108   5                P0=0xff;
+ 109   5                while(1);
+ 110   5              } 
+ 111   4              line[0]>>=1;  
+ 112   4            }   
+ 113   3          }     
+ 114   2        }       
+ 115   1        while(!key2);       
+ 116   1        delay(10);        
+C51 COMPILER V9.54   TANCHISHE                                                             04/18/2022 20:16:51 PAGE 3   
+
+ 117   1        while(!key2);       
+ 118   1      }         
+ 119          void Turn_left(uint length)                       //左移          
+ 120          {         
+ 121   1        uint j;       
+ 122   1        if(key3==0)       
+ 123   1        {       
+ 124   2          delay(10);      
+ 125   2          if(key3==0)     
+ 126   2          {     
+ 127   3            if(dir!=2&&dir!=3)    
+ 128   3            {   
+ 129   4              time=0; 
+ 130   4              dir=3;  
+ 131   4              delay(5000);  
+ 132   4              for(j=length-1;j>0;j--) 
+ 133   4              { 
+ 134   5                line[j]=line[j-1];
+ 135   5                column[j]=column[j-1];
+ 136   5              } 
+ 137   4              if(column[0]==0x7f) 
+ 138   4              { 
+ 139   5                P0=0xff;
+ 140   5                while(1);
+ 141   5              } 
+ 142   4              column[0]<<=1;  
+ 143   4              column[0]+=0x01;  
+ 144   4            }   
+ 145   3          }     
+ 146   2        }       
+ 147   1        while(!key3);       
+ 148   1        delay(10);        
+ 149   1        while(!key3);       
+ 150   1      }         
+ 151          void Turn_up(uint length)                         //上移          
+ 152          {         
+ 153   1        uint j;       
+ 154   1        if(key1==0)       
+ 155   1        {       
+ 156   2          delay(10);      
+ 157   2          if(key1==0)     
+ 158   2          {     
+ 159   3            if(dir!=1 &&dir!=4)   
+ 160   3            {   
+ 161   4              time=0; 
+ 162   4              dir=4;  
+ 163   4              delay(5000);  
+ 164   4              for(j=length-1;j>0;j--) 
+ 165   4              { 
+ 166   5                line[j]=line[j-1];
+ 167   5                column[j]=column[j-1];
+ 168   5              } 
+ 169   4              if(line[0]==0x80) 
+ 170   4              { 
+ 171   5                P0=0xff;
+ 172   5                while(1);
+ 173   5              } 
+ 174   4              line[0]<<=1;  
+ 175   4            }   
+ 176   3          }     
+ 177   2        }       
+ 178   1        while(!key1);       
+C51 COMPILER V9.54   TANCHISHE                                                             04/18/2022 20:16:51 PAGE 4   
+
+ 179   1        delay(10);        
+ 180   1        while(!key1);       
+ 181   1      }         
+ 182          void direction(uint dir,uint length)          
+ 183          {         
+ 184   1        uint j;       
+ 185   1        switch(dir)       
+ 186   1        {       
+ 187   2          case 1:                     //下移      
+ 188   2            if(time>=speed)   
+ 189   2            {   
+ 190   3              time=0; 
+ 191   3              for(j=length-1;j>0;j--) 
+ 192   3              { 
+ 193   4                line[j]=line[j-1];
+ 194   4                column[j]=column[j-1];
+ 195   4              } 
+ 196   3              if(line[0]==0x01) 
+ 197   3              { 
+ 198   4                P0=0xff;
+ 199   4                while(1);
+ 200   4              } 
+ 201   3              line[0]>>=1;  
+ 202   3            }   
+ 203   2            break;    
+ 204   2          case 2:                     //右移      
+ 205   2            if(time>=speed)   
+ 206   2            {   
+ 207   3              time=0; 
+ 208   3              for(j=length-1;j>0;j--) 
+ 209   3              { 
+ 210   4                line[j]=line[j-1];
+ 211   4                column[j]=column[j-1];
+ 212   4              } 
+ 213   3              if(column[0]==0xfe) 
+ 214   3              { 
+ 215   4                P0=0xff;
+ 216   4                while(1);
+ 217   4              } 
+ 218   3              column[0]>>=1;  
+ 219   3              column[0]+=0x80;  
+ 220   3            }   
+ 221   2            break;    
+ 222   2          case 3:     
+ 223   2            if(time>=speed)   
+ 224   2            {   
+ 225   3              time=0; 
+ 226   3              for(j=length-1;j>0;j--) 
+ 227   3              { 
+ 228   4                line[j]=line[j-1];
+ 229   4                column[j]=column[j-1];
+ 230   4              } 
+ 231   3              if(column[0]==0x7f) 
+ 232   3              { 
+ 233   4                P0=0xff;
+ 234   4                while(1);
+ 235   4              } 
+ 236   3              column[0]<<=1;  
+ 237   3              column[0]+=0x01;  
+ 238   3            }   
+ 239   2            break;    
+ 240   2          case 4:     
+C51 COMPILER V9.54   TANCHISHE                                                             04/18/2022 20:16:51 PAGE 5   
+
+ 241   2            if(time>=speed)   
+ 242   2            {   
+ 243   3              time=0; 
+ 244   3              for(j=length-1;j>0;j--) 
+ 245   3              { 
+ 246   4                line[j]=line[j-1];
+ 247   4                column[j]=column[j-1];
+ 248   4              } 
+ 249   3              if(line[0]==0x80) 
+ 250   3              { 
+ 251   4                P0=0xff;
+ 252   4                while(1);
+ 253   4              } 
+ 254   3              line[0]<<=1;  
+ 255   3            }   
+ 256   2        }       
+ 257   1      }         
+ 258          void Creat_food()         
+ 259          {         
+ 260   1        if(flag==0)       
+ 261   1        {       
+ 262   2          fdx=0x80>>rand()%8;     
+ 263   2          fdy=~(0x80>>rand()%8);      
+ 264   2          flag=1;     
+ 265   2        }       
+ 266   1      }         
+ 267          //void Eat_food(uint length)          
+ 268          //{         
+ 269          //  if((line[0]==fdx) && (column[0]==fdy))        
+ 270          //  {       
+ 271          //    line[length]=line[length-1];      
+ 272          //    column[length]=column[length-1];      
+ 273          //    length++;     
+ 274          //    flag=0;     
+ 275          //  }       
+ 276          //}         
+ 277          void die_snake(uint length)         
+ 278          {         
+ 279   1        uint i;       
+ 280   1        for(i=1;i<length-1;i++)       
+ 281   1        {       
+ 282   2          if(line[0]==line[i] && column[0]==column[i])      
+ 283   2          {     
+ 284   3            P0=0xff;    
+ 285   3            while(1);   
+ 286   3          }     
+ 287   2        }       
+ 288   1      }         
+ 289          void main()         
+ 290          {         
+ 291   1        uint length=2;        
+ 292   1        uint i;       
+ 293   1        uchar fd1,fd2;        
+ 294   1        CLK=0;        
+ 295   1        SLK=0;        
+ 296   1        bee=0;        
+ 297   1        timer_Init();       
+ 298   1        line[0]=0x40;       
+ 299   1        column[0]=0x7f;       
+ 300   1        line[1]=0x80;       
+ 301   1        column[1]=0x7f;       
+ 302   1        while(1)        
+C51 COMPILER V9.54   TANCHISHE                                                             04/18/2022 20:16:51 PAGE 6   
+
+ 303   1        {       
+ 304   2          fd1=line[length-1];     
+ 305   2          fd2=column[length-1];     
+ 306   2          Creat_food();     
+ 307   2          display(fdx,fdy);     
+ 308   2          if((line[0]==fdx) && (column[0]==fdy))      
+ 309   2          {     
+ 310   3            line[length]=line[length-1];    
+ 311   3            column[length]=column[length-1];    
+ 312   3            length++;   
+ 313   3            if(speed>=15)   
+ 314   3              speed-=2; 
+ 315   3            flag=0;   
+ 316   3          }     
+ 317   2          //Eat_food(length);     
+ 318   2          Turn_rigth(length);     
+ 319   2          Turn_down(length);      
+ 320   2          Turn_left(length);      
+ 321   2          Turn_up(length);      
+ 322   2          direction(dir,length);      
+ 323   2          die_snake(length);      
+ 324   2          for(i=0;i<length;i++)     
+ 325   2            display(line[i],column[i]);   
+ 326   2        }       
+ 327   1      }         
+ 328          void exter0() interrupt 1       //定时器0中断函数  
+ 329          {         
+ 330   1        time++;       
+ 331   1        TH0=(65536-50000)/256;        
+ 332   1        TL0=(65536-50000)%256;        
+ 333   1      }         
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   1328    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     50      10
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

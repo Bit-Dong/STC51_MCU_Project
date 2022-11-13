@@ -1,0 +1,64 @@
+C51 COMPILER V9.54   MAIN                                                                  05/22/2022 13:13:38 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Objects\main.obj
+COMPILER INVOKED BY: D:\MDK\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\main.lst
+                    -) TABS(2) OBJECT(.\Objects\main.obj)
+
+line level    source
+
+   1          #include <reg52.h>
+   2          #include "Delay.h"
+   3          #include "MatrixLED.h"
+   4          
+   5          //动画数据
+   6          unsigned char code Animation[]={
+   7          0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+   8          0x2A,0x00,0x16,0x7A,0x16,0x01,0x7E,0x54,0x55,0x7E,0x00,0x1F,0x54,0x5E,0xF7,0x5E,
+   9          0x54,0x1F,0x00,0x0A,0x3C,0x09,0x02,0x3C,0x25,0xE6,0x39,0x26,0xA6,0x29,0x03,0x00,
+  10          0x00,0x00,0x4C,0x50,0x50,0xFF,0x50,0x50,0x4C,0x00,0x00,0x30,0x24,0x64,0x34,0xF6,
+  11          0x3F,0x64,0x24,0x24,0x30,0x00,0x00,0x00,0x00,0x7F,0x40,0x5A,0x76,0x40,0x30,0x40,     //湖南城市学院�
+             -��冬
+  12          0x55,0x56,0xD7,0x55,0x45,0x60,0x00,0x00,0x00,0x00,0x8D,0x8A,0xFD,0xA8,0xFF,0x88,
+  13          0x8D,0x0B,0x0D,0x00,0x00,0x00,0x00,0x06,0x28,0x58,0xD5,0x58,0x64,0x44,0x02,0x00,
+  14          0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+  15          };
+  16          
+  17          void main()
+  18          {
+  19   1        unsigned char i,Offset=0,Count=0;
+  20   1        MatrixLED_Init();
+  21   1        while(1)
+  22   1        {
+  23   2          for(i=0;i<8;i++)  //循环8次，显示8列数据
+  24   2          {
+  25   3            MatrixLED_ShowColumn(i,Animation[i+Offset]);
+  26   3          }
+  27   2          Count++;      //计次延时
+  28   2          if(Count>15)
+  29   2          {
+  30   3            Count=0;
+  31   3            Offset++;;    //偏移+8，切换下一帧画面
+  32   3            if(Offset>112)
+  33   3            {
+  34   4              Offset=0;
+  35   4            }
+  36   3          }
+  37   2        }
+  38   1      }
+  39          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     62    ----
+   CONSTANT SIZE    =    128    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       3
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
