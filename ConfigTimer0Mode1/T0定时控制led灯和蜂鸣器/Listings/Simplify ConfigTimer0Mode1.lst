@@ -1,0 +1,107 @@
+C51 COMPILER V9.54   SIMPLIFY_CONFIGTIMER0MODE1                                            03/31/2022 15:53:27 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE SIMPLIFY_CONFIGTIMER0MODE1
+OBJECT MODULE PLACED IN .\Objects\Simplify ConfigTimer0Mode1.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE Simplify ConfigTimer0Mode1.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND
+                    - PRINT(.\Listings\Simplify ConfigTimer0Mode1.lst) TABS(2) OBJECT(.\Objects\Simplify ConfigTimer0Mode1.obj)
+
+line level    source
+
+   1          // T0定时控制 led灯亮灭 和 蜂鸣器发出声音
+   2          
+   3          #include<reg52.h>
+   4          #include<intrins.h>
+   5          
+   6          sbit led=P2^0;
+   7          sbit beep=P1^5;
+   8          
+   9          unsigned char T0RH,T0RL;
+  10          
+  11          void Delay1ms()   //@11.0592MHz
+  12          {
+  13   1        unsigned char i, j;
+  14   1      
+  15   1        _nop_();
+  16   1        i = 2;
+  17   1        j = 199;
+  18   1        do
+  19   1        {
+  20   2          while (--j);
+  21   2        } while (--i);
+  22   1      }
+  23          
+  24          void Delay1000ms()    //@11.0592MHz
+  25          {
+  26   1        unsigned char i, j, k;
+  27   1      
+  28   1        _nop_();
+  29   1        i = 8;
+  30   1        j = 1;
+  31   1        k = 243;
+  32   1        do
+  33   1        {
+  34   2          do
+  35   2          {
+  36   3            while (--k);
+  37   3          } while (--j);
+  38   2        } while (--i);
+  39   1      }
+  40          
+  41          
+  42          void ConfigTimer0(unsigned char ms)      //1<=ms<=71
+  43          {
+  44   1        unsigned long tmp;
+  45   1        tmp=11059200/12;             //计算频率
+  46   1        tmp=(tmp*ms)/1000;
+  47   1        tmp=65536-tmp;
+  48   1        T0RH=(unsigned char)(tmp>>8);
+  49   1        T0RL=(unsigned char)(tmp);
+  50   1        
+  51   1        TMOD &=0xf0;  //配置工作模式 
+  52   1        TMOD |=0x01;
+  53   1        TH0=T0RH;       //设置定时器时间
+  54   1        TL0=T0RL;      
+C51 COMPILER V9.54   SIMPLIFY_CONFIGTIMER0MODE1                                            03/31/2022 15:53:27 PAGE 2   
+
+  55   1        TR0=1;         //启动定时器
+  56   1      }
+  57          
+  58          void main()
+  59          {
+  60   1        unsigned int cnt=0;
+  61   1        ConfigTimer0(1);
+  62   1        while(1)
+  63   1        {
+  64   2          if(TF0==1)       //增到0xffff溢出 
+  65   2          {
+  66   3            cnt++;
+  67   3            TF0=0;            //软件清零
+  68   3            TH0=T0RH;
+  69   3            TL0=T0RL;       //重新赋值
+  70   3            led=~led;
+  71   3            if(cnt>=100)
+  72   3            {
+  73   4            cnt=0;
+  74   4            beep=~beep; 
+  75   4            //Delay1ms();     //定与不定义这个延时1ms 蜂鸣器“滴滴” 声 感觉都差不多  led视觉上一直亮
+  76   4            Delay1000ms();    //定义延时1000ms 蜂鸣器“滴滴" 声明显变慢 且led灯 一闪一闪 
+  77   4            }
+  78   3            
+  79   3          }
+  80   2        }
+  81   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    177    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      2       6
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,115 @@
+C51 COMPILER V9.54   CONFIGTIMER0__TIMER1__MODE1                                           04/02/2022 13:43:50 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE CONFIGTIMER0__TIMER1__MODE1
+OBJECT MODULE PLACED IN .\Objects\ConfigTimer0、Timer1  Mode1.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE ConfigTimer0、Timer1  Mode1.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEN
+                    -D PRINT(.\Listings\ConfigTimer0、Timer1  Mode1.lst) TABS(2) OBJECT(.\Objects\ConfigTimer0、Timer1  Mode1.obj)
+
+line level    source
+
+   1          // 定时器0控制 蜂鸣器发出声音
+   2          // 定时器1控制 led灯亮灭
+   3          
+   4          #include<reg52.h>
+   5          #include<intrins.h>
+   6          
+   7          sbit led=P2^0;
+   8          sbit beep=P1^5;
+   9          
+  10          unsigned char T0RH,T0RL;
+  11          unsigned char T1RH,T1RL;
+  12          
+  13          void Delay1ms()   //@11.0592MHz
+  14          {
+  15   1        unsigned char i, j;
+  16   1      
+  17   1        _nop_();
+  18   1        i = 2;
+  19   1        j = 199;
+  20   1        do
+  21   1        {
+  22   2          while (--j);
+  23   2        } while (--i);
+  24   1      }
+  25          
+  26          
+  27          
+  28          void ConfigTimer0(unsigned char ms)     //1<=ms<=71
+  29          {
+  30   1        unsigned long tmp;
+  31   1        tmp=11059200/12;                    //计算频率
+  32   1        tmp=(tmp*ms)/1000;
+  33   1        tmp=65536-tmp;                 //初值
+  34   1        
+  35   1        T0RH=(unsigned char)(tmp>>8);
+  36   1        T0RL=(unsigned char)(tmp);
+  37   1        TMOD &=0xf0;       //防止影响定时器T1的高四位
+  38   1        TMOD |=0x01;
+  39   1        TH0=T0RH;              //设置定时时间
+  40   1        TL0=T0RL;  
+  41   1        TR0=1;                 //启动定时器0
+  42   1      }
+  43          
+  44          void ConfigTimer1(unsigned char ms)
+  45          {
+  46   1        unsigned long tmp;
+  47   1        tmp=11059200/12;
+  48   1        tmp=(tmp*ms)/1000;
+  49   1        tmp=65536-tmp;
+  50   1        
+  51   1        T1RH=(unsigned char)(tmp>>8);
+  52   1        T1RL=(unsigned char)(tmp);
+  53   1        TMOD &=0x0f;
+  54   1        TMOD |=0x10;
+C51 COMPILER V9.54   CONFIGTIMER0__TIMER1__MODE1                                           04/02/2022 13:43:50 PAGE 2   
+
+  55   1        TH1=T1RH;
+  56   1        TL1=T1RL;
+  57   1        TR1=1;
+  58   1      }
+  59          
+  60          void main()
+  61          {
+  62   1        unsigned int cnt;
+  63   1        ConfigTimer0(2);          //设定2ms
+  64   1        ConfigTimer1(4);          //设定4ms
+  65   1        while(1)
+  66   1        {                     //轮询模式
+  67   2          if(TF0==1)
+  68   2          {
+  69   3            TF0=0;               //软件清零
+  70   3            TH0=T0RH;             //重新赋值
+  71   3            TL0=T0RL;
+  72   3            
+  73   3            cnt=60000;
+  74   3            while(cnt--)
+  75   3            {
+  76   4              beep=~beep;     //蜂鸣器翻转状态
+  77   4              Delay1ms();     //定义100ms时 “滴滴” 的声音，1ms时 “嗯~ ~” 的声音
+  78   4            }
+  79   3          }
+  80   2          if(TF1==1)
+  81   2          {
+  82   3            TF1=0;
+  83   3            TH1=T1RH;
+  84   3            TL1=T1RL; 
+  85   3            led=~led;            //led灯翻转状态
+  86   3          }
+  87   2        }
+  88   1      } 
+  89            
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    265    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      4       8
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

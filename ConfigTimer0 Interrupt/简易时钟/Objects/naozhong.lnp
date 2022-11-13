@@ -1,0 +1,3 @@
+".\Objects\naozhong.obj" 
+TO ".\Objects\naozhong" 
+PRINT(".\Listings\naozhong.m51") RAMSIZE(256) 

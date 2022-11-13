@@ -1,0 +1,3 @@
+".\Objects\Simplify ConfigTimer0Mode1.obj" 
+TO ".\Objects\Simplify ConfigTimer0Mode1" 
+PRINT(".\Listings\Simplify ConfigTimer0Mode1.m51") RAMSIZE(256) 

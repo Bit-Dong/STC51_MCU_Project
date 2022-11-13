@@ -1,0 +1,3 @@
+".\Objects\ConfigTimer0Mode3.obj" 
+TO ".\Objects\ConfigTimer0Mode3" 
+PRINT(".\Listings\ConfigTimer0Mode3.m51") RAMSIZE(256) 

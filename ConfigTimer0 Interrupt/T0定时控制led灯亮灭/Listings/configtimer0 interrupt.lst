@@ -1,0 +1,72 @@
+C51 COMPILER V9.54   CONFIGTIMER0_INTERRUPT                                                03/31/2022 21:06:34 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE CONFIGTIMER0_INTERRUPT
+OBJECT MODULE PLACED IN .\Objects\configtimer0 interrupt.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE configtimer0 interrupt.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRI
+                    -NT(.\Listings\configtimer0 interrupt.lst) TABS(2) OBJECT(.\Objects\configtimer0 interrupt.obj)
+
+line level    source
+
+   1          //T0中断控制led灯定时翻转
+   2           
+   3          #include <reg52.h>     
+   4           
+   5          typedef unsigned int u16;   
+   6          typedef unsigned char u8;
+   7          unsigned char T0RH,T0RL;
+   8          sbit led=P2^0;   
+   9          
+  10          void Timer0Init(u8 ms)
+  11          {
+  12   1        unsigned long tmp;
+  13   1        tmp=11059200/12;
+  14   1        tmp=(tmp*ms)/1000;
+  15   1        tmp=65536-tmp;                 //初值
+  16   1        T0RH=(unsigned char)(tmp>>8);
+  17   1        T0RL=(unsigned char)(tmp);
+  18   1        
+  19   1        TMOD &=0xf0;       //防止影响定时器T1的高四位
+  20   1        TMOD |=0x01;
+  21   1        TH0=T0RH;           //设置定时时间
+  22   1        TL0=T0RL;                   
+  23   1       
+  24   1        ET0=1;       //打开T0中断允许位
+  25   1        EA=1;        //打开总中断允许位开关
+  26   1        TR0=1;       //启动定时器0
+  27   1      }
+  28           
+  29          void main()
+  30          { 
+  31   1        Timer0Init(1);  
+  32   1        while(1);   
+  33   1      }
+  34          
+  35          void Timer0() interrupt 1
+  36          {
+  37   1        static u16 i;
+  38   1        TH0=T0RH;           //重新赋值定时时间
+  39   1        TL0=T0RL;  
+  40   1        i++;
+  41   1        if(i==100)
+  42   1        {
+  43   2          i=0;
+  44   2          led=~led; 
+  45   2        } 
+  46   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    141    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      4       4
+C51 COMPILER V9.54   CONFIGTIMER0_INTERRUPT                                                03/31/2022 21:06:34 PAGE 2   
+
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

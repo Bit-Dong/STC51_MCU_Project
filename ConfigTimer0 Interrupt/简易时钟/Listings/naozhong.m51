@@ -1,0 +1,252 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        05/31/2022  16:21:37  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+D:\MDK\C51\BIN\BL51.EXE .\Objects\naozhong.obj TO .\Objects\naozhong PRINT (.\Listings\naozhong.m51) RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  .\Objects\naozhong.obj (NAOZHONG)
+  D:\MDK\C51\LIB\C51S.LIB (?C_STARTUP)
+  D:\MDK\C51\LIB\C51S.LIB (?C?UIDIV)
+  D:\MDK\C51\LIB\C51S.LIB (?C_INIT)
+
+
+LINK MAP OF MODULE:  .\Objects\naozhong (NAOZHONG)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     000DH     UNIT         ?DT?NAOZHONG
+            IDATA   0015H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     0007H     UNIT         ?PR?DELAY1US?NAOZHONG
+                    000AH     0001H                  *** GAP ***
+            CODE    000BH     0003H     ABSOLUTE     
+            CODE    000EH     00D4H     UNIT         ?PR?NAOZHONG?NAOZHONG
+            CODE    00E2H     008CH     UNIT         ?C_C51STARTUP
+            CODE    016EH     0085H     UNIT         ?PR?MAIN?NAOZHONG
+            CODE    01F3H     0055H     UNIT         ?C?LIB_CODE
+            CODE    0248H     001CH     UNIT         ?C_INITSEG
+            CODE    0264H     0015H     UNIT         ?PR?TIMER0INIT?NAOZHONG
+            CODE    0279H     0010H     UNIT         ?CO?NAOZHONG
+            CODE    0289H     0006H     UNIT         ?PR?DELAY10US?NAOZHONG
+
+
+
+OVERLAY MAP OF MODULE:   .\Objects\naozhong (NAOZHONG)
+
+
+SEGMENT
+  +--> CALLED SEGMENT
+---------------------
+?C_C51STARTUP
+  +--> ?PR?MAIN?NAOZHONG
+  +--> ?C_INITSEG
+
+?PR?MAIN?NAOZHONG
+  +--> ?PR?TIMER0INIT?NAOZHONG
+  +--> ?CO?NAOZHONG
+  +--> ?PR?DELAY1US?NAOZHONG
+
+
+
+BL51 BANKED LINKER/LOCATER V6.22                                                      05/31/2022  16:21:37  PAGE 2
+
+
+SYMBOL TABLE OF MODULE:  .\Objects\naozhong (NAOZHONG)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        NAOZHONG
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0080H         PUBLIC        P0
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+  B:00A8H.7       PUBLIC        EA
+  C:0006H         PUBLIC        Delay1us
+  D:00A8H         PUBLIC        IE
+  D:00B8H         PUBLIC        IP
+  C:016EH         PUBLIC        main
+  D:0098H         PUBLIC        SCON
+  D:0089H         PUBLIC        TMOD
+  D:0088H         PUBLIC        TCON
+  C:0289H         PUBLIC        Delay10us
+  C:0279H         PUBLIC        smg
+  B:00A8H.1       PUBLIC        ET0
+  B:0088H.5       PUBLIC        TF0
+  C:0264H         PUBLIC        Timer0Init
+  D:008CH         PUBLIC        TH0
+  D:008AH         PUBLIC        TL0
+  B:0088H.4       PUBLIC        TR0
+  D:0008H         PUBLIC        count1
+  D:0009H         PUBLIC        count2
+  D:000AH         PUBLIC        count3
+  D:000BH         PUBLIC        count4
+  B:00A0H.2       PUBLIC        LSA
+  D:000CH         PUBLIC        count5
+  B:00A0H.3       PUBLIC        LSB
+  D:000DH         PUBLIC        count6
+  B:00A0H.4       PUBLIC        LSC
+  D:00C8H         PUBLIC        T2CON
+  D:000EH         PUBLIC        i
+  C:000EH         PUBLIC        naozhong
+  D:0010H         PUBLIC        o
+  D:0014H         PUBLIC        t
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          DELAY10US
+  -------         DO            
+  D:0007H         SYMBOL        i
+  -------         ENDDO         
+  C:0289H         LINE#         20
+  C:0289H         LINE#         21
+  C:0289H         LINE#         24
+  C:028AH         LINE#         25
+  C:028CH         LINE#         26
+  C:028EH         LINE#         27
+  -------         ENDPROC       DELAY10US
+  -------         PROC          L?0019
+  -------         ENDPROC       L?0019
+  -------         PROC          DELAY1US
+  C:0006H         LINE#         30
+BL51 BANKED LINKER/LOCATER V6.22                                                      05/31/2022  16:21:37  PAGE 3
+
+
+  C:0006H         LINE#         31
+  C:0006H         LINE#         32
+  C:0007H         LINE#         33
+  C:0008H         LINE#         34
+  C:0009H         LINE#         35
+  -------         ENDPROC       DELAY1US
+  -------         PROC          TIMER0INIT
+  C:0264H         LINE#         41
+  C:0264H         LINE#         42
+  C:0264H         LINE#         43
+  C:0267H         LINE#         44
+  C:026AH         LINE#         45
+  C:026DH         LINE#         46
+  C:0270H         LINE#         47
+  C:0272H         LINE#         48
+  C:0274H         LINE#         49
+  C:0276H         LINE#         50
+  C:0278H         LINE#         51
+  -------         ENDPROC       TIMER0INIT
+  -------         PROC          MAIN
+  C:016EH         LINE#         56
+  C:016EH         LINE#         57
+  C:016EH         LINE#         58
+  C:0171H         LINE#         67
+  C:0171H         LINE#         68
+  C:0171H         LINE#         70
+  C:0177H         LINE#         71
+  C:017CH         LINE#         72
+  C:0182H         LINE#         74
+  C:0188H         LINE#         75
+  C:018AH         LINE#         76
+  C:0190H         LINE#         78
+  C:0196H         LINE#         79
+  C:0199H         LINE#         80
+  C:019EH         LINE#         82
+  C:01A4H         LINE#         83
+  C:01A9H         LINE#         84
+  C:01AFH         LINE#         86
+  C:01B5H         LINE#         87
+  C:01BAH         LINE#         88
+  C:01C0H         LINE#         90
+  C:01C6H         LINE#         91
+  C:01C9H         LINE#         92
+  C:01CEH         LINE#         94
+  C:01D4H         LINE#         95
+  C:01D9H         LINE#         96
+  C:01DFH         LINE#         98
+  C:01E5H         LINE#         99
+  C:01EAH         LINE#         100
+  C:01F0H         LINE#         102
+  -------         ENDPROC       MAIN
+  -------         PROC          NAOZHONG
+  C:000EH         LINE#         107
+  C:0021H         LINE#         110
+  C:0029H         LINE#         111
+  C:003AH         LINE#         112
+  C:003AH         LINE#         113
+BL51 BANKED LINKER/LOCATER V6.22                                                      05/31/2022  16:21:37  PAGE 4
+
+
+  C:003CH         LINE#         115
+  C:0041H         LINE#         116
+  C:0041H         LINE#         117
+  C:0049H         LINE#         118
+  C:004CH         LINE#         119
+  C:004CH         LINE#         121
+  C:0051H         LINE#         122
+  C:0051H         LINE#         128
+  C:0059H         LINE#         129
+  C:005CH         LINE#         130
+  C:005FH         LINE#         131
+  C:005FH         LINE#         133
+  C:0064H         LINE#         134
+  C:0064H         LINE#         135
+  C:006CH         LINE#         136
+  C:006FH         LINE#         137
+  C:0072H         LINE#         138
+  C:0075H         LINE#         139
+  C:0075H         LINE#         141
+  C:007AH         LINE#         142
+  C:007AH         LINE#         143
+  C:0082H         LINE#         144
+  C:0085H         LINE#         145
+  C:0088H         LINE#         146
+  C:008BH         LINE#         147
+  C:008EH         LINE#         148
+  C:008EH         LINE#         150
+  C:0093H         LINE#         151
+  C:0093H         LINE#         152
+  C:0095H         LINE#         153
+  C:0095H         LINE#         155
+  C:009AH         LINE#         156
+  C:009AH         LINE#         157
+  C:00A2H         LINE#         158
+  C:00A5H         LINE#         159
+  C:00A8H         LINE#         160
+  C:00ABH         LINE#         161
+  C:00AEH         LINE#         162
+  C:00B1H         LINE#         163
+  C:00B1H         LINE#         165
+  C:00B6H         LINE#         166
+  C:00B6H         LINE#         167
+  C:00B9H         LINE#         168
+  C:00BCH         LINE#         169
+  C:00BFH         LINE#         170
+  C:00C2H         LINE#         171
+  C:00C5H         LINE#         172
+  C:00C8H         LINE#         173
+  C:00CBH         LINE#         174
+  C:00CBH         LINE#         176
+  C:00CBH         LINE#         178
+  C:00CEH         LINE#         179
+  C:00D1H         LINE#         180
+  -------         ENDPROC       NAOZHONG
+  -------         ENDMOD        NAOZHONG
+
+  -------         MODULE        ?C?UIDIV
+BL51 BANKED LINKER/LOCATER V6.22                                                      05/31/2022  16:21:37  PAGE 5
+
+
+  C:01F3H         PUBLIC        ?C?UIDIV
+  -------         ENDMOD        ?C?UIDIV
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?DELAY10US?NAOZHONG
+
+Program Size: data=22.0 xdata=0 code=654
+LINK/LOCATE RUN COMPLETE.  1 WARNING(S),  0 ERROR(S)

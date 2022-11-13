@@ -1,0 +1,3 @@
+".\Objects\configtimer1 interrupt.obj" 
+TO ".\Objects\configtimer1 interrupt" 
+PRINT(".\Listings\configtimer1 interrupt.m51") RAMSIZE(256) 

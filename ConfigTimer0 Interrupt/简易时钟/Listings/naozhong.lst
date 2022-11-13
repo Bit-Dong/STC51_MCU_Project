@@ -1,0 +1,212 @@
+C51 COMPILER V9.54   NAOZHONG                                                              05/31/2022 16:21:37 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE NAOZHONG
+OBJECT MODULE PLACED IN .\Objects\naozhong.obj
+COMPILER INVOKED BY: D:\MDK\C51\BIN\C51.EXE naozhong.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\naoz
+                    -hong.lst) TABS(2) OBJECT(.\Objects\naozhong.obj)
+
+line level    source
+
+   1          #include<reg52.h>
+   2          #include<intrins.h>
+   3          #define uchar unsigned char
+   4          #define uint unsigned int
+   5          #define dig P0
+   6            sbit beep=P2^5;
+   7            sbit LSA=P2^2;      //74LS138 定义3个引脚对数码管进行位选
+   8            sbit LSB=P2^3;
+   9            sbit LSC=P2^4;
+  10          
+  11          //void Delay100us()   //@11.0592MHz
+  12          //{
+  13          //  unsigned char i;
+  14          
+  15          //  _nop_();
+  16          //  i = 43;
+  17          //  while (--i);
+  18          //}
+  19          
+  20          void Delay10us()    //@11.0592MHz
+  21          {
+  22   1        unsigned char i;
+  23   1      
+  24   1        _nop_();
+  25   1        i = 25;
+  26   1        while (--i);
+  27   1      }
+  28          
+  29          
+  30          void Delay1us()   //@11.0592MHz
+  31          {
+  32   1        _nop_();
+  33   1        _nop_();
+  34   1        _nop_();
+  35   1      }
+  36          
+  37           
+  38          //阴极数码管 段选0-F
+  39          uchar code smg[]={0x3f  , 0x06 , 0x5b , 0x4f , 0x66 , 0x6d ,0x7d , 0x07 , 0x7f  , 0x6f , 0x77 , 0x7c ,0x39
+             - , 0x5e , 0x79 , 0x71};
+  40          
+  41          void Timer0Init(void)   //1ms
+  42          {
+  43   1        TMOD &= 0xF0;   
+  44   1        TMOD |= 0x01;   
+  45   1        TL0 = 0x66;   
+  46   1        TH0 = 0xFC; 
+  47   1        TF0 = 0;    
+  48   1        TR0 = 1;
+  49   1        EA=1;
+  50   1        ET0=1;
+  51   1      }
+  52          
+  53          unsigned long o=50000;
+C51 COMPILER V9.54   NAOZHONG                                                              05/31/2022 16:21:37 PAGE 2   
+
+  54          unsigned int i;
+  55          uchar count1=0,count2=0,count3=0,count4=0,count5=0,count6=0;
+  56          void main()
+  57          {
+  58   1        Timer0Init();    
+  59   1      //  if(count2==6)
+  60   1      //      { 
+  61   1      //          while(o--)
+  62   1      //        {
+  63   1      //              beep=~beep;
+  64   1      //              Delay10us();
+  65   1      //          }
+  66   1      //        }
+  67   1        while(1)
+  68   1        {                   
+  69   2      
+  70   2              LSA=0;LSB=0;LSC=0;
+  71   2              dig=smg[count1];
+  72   2              Delay1us();dig=0x00;    //使动态数码管消隐
+  73   2          
+  74   2              LSA=1;LSB=0;LSC=0;
+  75   2              dig=smg[count2];
+  76   2              Delay1us();dig=0x00;    //使动态数码管消隐
+  77   2          
+  78   2              LSA=0;LSB=1;LSC=0;
+  79   2              dig=0x40;
+  80   2              Delay1us();dig=0x00;    //使动态数码管消隐 
+  81   2          
+  82   2              LSA=1;LSB=1;LSC=0;
+  83   2              dig=smg[count3];
+  84   2              Delay1us();dig=0x00;    //使动态数码管消隐
+  85   2          
+  86   2              LSA=0;LSB=0;LSC=1;
+  87   2              dig=smg[count4];
+  88   2              Delay1us();dig=0x00;    //使动态数码管消隐
+  89   2              
+  90   2              LSA=1;LSB=0;LSC=1;
+  91   2              dig=0x40;
+  92   2              Delay1us();dig=0x00;    //使动态数码管消隐
+  93   2              
+  94   2              LSA=0;LSB=1;LSC=1;
+  95   2              dig=smg[count5];
+  96   2              Delay1us();dig=0x00;    //使动态数码管消隐
+  97   2              
+  98   2              LSA=1;LSB=1;LSC=1;
+  99   2              dig=smg[count6];
+ 100   2              Delay1us();dig=0x00;    //使动态数码管消隐
+ 101   2           
+ 102   2        }
+ 103   1      }
+ 104          
+ 105          
+ 106          unsigned char t=0;
+ 107          void naozhong() interrupt 1
+ 108          {
+ 109   1      
+ 110   1        i++;
+ 111   1        if(i%1000==0)
+ 112   1          {
+ 113   2            count1++;
+ 114   2            
+ 115   2            if(count1==10)
+C51 COMPILER V9.54   NAOZHONG                                                              05/31/2022 16:21:37 PAGE 3   
+
+ 116   2            {
+ 117   3              count2=count2+count1/10;
+ 118   3              count1=0;
+ 119   3            }
+ 120   2      
+ 121   2            if(count2==6)
+ 122   2            { 
+ 123   3      //          while(o--)
+ 124   3      //        {
+ 125   3      //              beep=~beep;
+ 126   3      //              Delay10us();
+ 127   3      //          }
+ 128   3              count3=count3+count2/6;
+ 129   3              count2=0;
+ 130   3              count1=0;
+ 131   3            }
+ 132   2            
+ 133   2              if(count3==10)
+ 134   2            {
+ 135   3              count4=count4+count3/10;
+ 136   3              count3=0;
+ 137   3              count2=0;
+ 138   3              count1=0;
+ 139   3            }
+ 140   2            
+ 141   2              if(count4==6)
+ 142   2            {
+ 143   3              count5=count5+count4/6;
+ 144   3              count4=0;
+ 145   3              count3=0;
+ 146   3              count2=0;
+ 147   3              count1=0;
+ 148   3            }
+ 149   2            
+ 150   2            if(count5==4)
+ 151   2            {
+ 152   3              t++;
+ 153   3            }
+ 154   2            
+ 155   2              if(count5==10)
+ 156   2            {
+ 157   3              count6=count6+count5/10;
+ 158   3              count5=0;
+ 159   3              count4=0;
+ 160   3              count3=0;
+ 161   3              count2=0;
+ 162   3              count1=0;
+ 163   3            }
+ 164   2            
+ 165   2            if(t==3)
+ 166   2            {
+ 167   3              count6=0;
+ 168   3              count5=0;
+ 169   3              count4=0;
+ 170   3              count3=0;
+ 171   3              count2=0;
+ 172   3              count1=0;
+ 173   3              t=0;
+ 174   3            }
+ 175   2            
+ 176   2          }
+ 177   1      
+C51 COMPILER V9.54   NAOZHONG                                                              05/31/2022 16:21:37 PAGE 4   
+
+ 178   1          TL0 = 0x66;   
+ 179   1          TH0 = 0xFC; 
+ 180   1      }
+ 181            
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    379    ----
+   CONSTANT SIZE    =     16    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     13    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

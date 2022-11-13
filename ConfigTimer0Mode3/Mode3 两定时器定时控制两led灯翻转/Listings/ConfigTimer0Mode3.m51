@@ -1,0 +1,164 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        03/31/2022  15:59:40  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+C:\KEIL_V5\C51\BIN\BL51.EXE .\Objects\ConfigTimer0Mode3.obj TO .\Objects\ConfigTimer0Mode3 PRINT (.\Listings\ConfigTimer
+>> 0Mode3.m51) RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  .\Objects\ConfigTimer0Mode3.obj (CONFIGTIMER0MODE3)
+  C:\KEIL_V5\C51\LIB\C51S.LIB (?C_STARTUP)
+  C:\KEIL_V5\C51\LIB\C51S.LIB (?C?LMUL)
+  C:\KEIL_V5\C51\LIB\C51S.LIB (?C?ULDIV)
+
+
+LINK MAP OF MODULE:  .\Objects\ConfigTimer0Mode3 (CONFIGTIMER0MODE3)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     000AH     UNIT         _DATA_GROUP_
+            DATA    0012H     0002H     UNIT         ?DT?CONFIGTIMER0MODE3
+            IDATA   0014H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     011DH     UNIT         ?C?LIB_CODE
+            CODE    0120H     00CBH     UNIT         ?PR?_CONFIGTIMER0MODE3?CONFIGTIMER0MODE3
+            CODE    01EBH     004DH     UNIT         ?PR?MAIN?CONFIGTIMER0MODE3
+            CODE    0238H     000CH     UNIT         ?C_C51STARTUP
+
+
+
+OVERLAY MAP OF MODULE:   .\Objects\ConfigTimer0Mode3 (CONFIGTIMER0MODE3)
+
+
+SEGMENT                                            DATA_GROUP 
+  +--> CALLED SEGMENT                            START    LENGTH
+----------------------------------------------------------------
+?C_C51STARTUP                                    -----    -----
+  +--> ?PR?MAIN?CONFIGTIMER0MODE3
+
+?PR?MAIN?CONFIGTIMER0MODE3                       0008H    0004H
+  +--> ?PR?_CONFIGTIMER0MODE3?CONFIGTIMER0MODE3
+
+?PR?_CONFIGTIMER0MODE3?CONFIGTIMER0MODE3         000CH    0006H
+
+
+
+SYMBOL TABLE OF MODULE:  .\Objects\ConfigTimer0Mode3 (CONFIGTIMER0MODE3)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        CONFIGTIMER0MODE3
+BL51 BANKED LINKER/LOCATER V6.22                                                      03/31/2022  15:59:40  PAGE 2
+
+
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+  D:00A8H         PUBLIC        IE
+  D:00B8H         PUBLIC        IP
+  D:0012H         PUBLIC        T0RH
+  D:0013H         PUBLIC        T0RL
+  C:01EBH         PUBLIC        main
+  D:0098H         PUBLIC        SCON
+  D:0089H         PUBLIC        TMOD
+  D:0088H         PUBLIC        TCON
+  C:0120H         PUBLIC        _ConfigTimer0Mode3
+  B:0088H.5       PUBLIC        TF0
+  B:0088H.7       PUBLIC        TF1
+  D:008CH         PUBLIC        TH0
+  D:008AH         PUBLIC        TL0
+  B:0088H.4       PUBLIC        TR0
+  B:0088H.6       PUBLIC        TR1
+  B:00A0H.0       PUBLIC        led0
+  B:00A0H.1       PUBLIC        led1
+  D:00C8H         PUBLIC        T2CON
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          _CONFIGTIMER0MODE3
+  D:0002H         SYMBOL        usL
+  D:000CH         SYMBOL        usH
+  -------         DO            
+  D:000EH         SYMBOL        tmp
+  -------         ENDDO         
+  C:0120H         LINE#         9
+  C:0128H         LINE#         10
+  C:0128H         LINE#         12
+  C:0131H         LINE#         13
+  C:0135H         LINE#         14
+  C:0140H         LINE#         15
+  C:0146H         LINE#         17
+  C:0152H         LINE#         18
+  C:0177H         LINE#         19
+  C:018DH         LINE#         20
+  C:0190H         LINE#         22
+  C:019CH         LINE#         23
+  C:01C1H         LINE#         24
+  C:01D7H         LINE#         25
+  C:01DAH         LINE#         27
+  C:01DDH         LINE#         28
+  C:01E0H         LINE#         29
+  C:01E3H         LINE#         30
+  C:01E6H         LINE#         31
+  C:01E8H         LINE#         32
+  C:01EAH         LINE#         33
+  -------         ENDPROC       _CONFIGTIMER0MODE3
+  -------         PROC          MAIN
+  -------         DO            
+  D:0008H         SYMBOL        cntL
+  D:000AH         SYMBOL        cntH
+  -------         ENDDO         
+  C:01EBH         LINE#         35
+BL51 BANKED LINKER/LOCATER V6.22                                                      03/31/2022  15:59:40  PAGE 3
+
+
+  C:01EBH         LINE#         36
+  C:01EBH         LINE#         38
+  C:01F6H         LINE#         39
+  C:01F6H         LINE#         40
+  C:01F6H         LINE#         41
+  C:01F9H         LINE#         42
+  C:01F9H         LINE#         43
+  C:0201H         LINE#         44
+  C:020AH         LINE#         45
+  C:020AH         LINE#         46
+  C:020FH         LINE#         47
+  C:0211H         LINE#         48
+  C:0211H         LINE#         49
+  C:0213H         LINE#         50
+  C:0216H         LINE#         51
+  C:0216H         LINE#         52
+  C:0219H         LINE#         53
+  C:0219H         LINE#         54
+  C:0221H         LINE#         55
+  C:022AH         LINE#         56
+  C:022AH         LINE#         57
+  C:022FH         LINE#         58
+  C:0231H         LINE#         59
+  C:0231H         LINE#         60
+  C:0233H         LINE#         61
+  C:0236H         LINE#         62
+  C:0236H         LINE#         63
+  -------         ENDPROC       MAIN
+  -------         ENDMOD        CONFIGTIMER0MODE3
+
+  -------         MODULE        ?C?LMUL
+  C:0003H         PUBLIC        ?C?LMUL
+  -------         ENDMOD        ?C?LMUL
+
+  -------         MODULE        ?C?ULDIV
+  C:008EH         PUBLIC        ?C?ULDIV
+  -------         ENDMOD        ?C?ULDIV
+
+Program Size: data=21.0 xdata=0 code=580
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

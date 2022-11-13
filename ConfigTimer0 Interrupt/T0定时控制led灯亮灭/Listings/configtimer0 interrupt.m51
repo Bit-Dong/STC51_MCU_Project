@@ -1,0 +1,151 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        03/31/2022  21:06:34  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+C:\KEIL_V5\C51\BIN\BL51.EXE .\Objects\configtimer0 interrupt.obj TO .\Objects\configtimer0 interrupt PRINT (.\Listings\c
+>> onfigtimer0 interrupt.m51) RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  .\Objects\configtimer0 interrupt.obj (CONFIGTIMER0_INTERRUPT)
+  C:\KEIL_V5\C51\LIB\C51S.LIB (?C_STARTUP)
+  C:\KEIL_V5\C51\LIB\C51S.LIB (?C?LMUL)
+  C:\KEIL_V5\C51\LIB\C51S.LIB (?C?ULDIV)
+  C:\KEIL_V5\C51\LIB\C51S.LIB (?C?ULSHR)
+
+
+LINK MAP OF MODULE:  .\Objects\configtimer0 interrupt (CONFIGTIMER0_INTERRUPT)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0004H     UNIT         ?DT?CONFIGTIMER0_INTERRUPT
+            DATA    000CH     0004H     UNIT         _DATA_GROUP_
+            IDATA   0010H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     0007H     UNIT         ?PR?MAIN?CONFIGTIMER0_INTERRUPT
+                    000AH     0001H                  *** GAP ***
+            CODE    000BH     0003H     ABSOLUTE     
+            CODE    000EH     0130H     UNIT         ?C?LIB_CODE
+            CODE    013EH     0067H     UNIT         ?PR?_TIMER0INIT?CONFIGTIMER0_INTERRUPT
+            CODE    01A5H     001FH     UNIT         ?PR?TIMER0?CONFIGTIMER0_INTERRUPT
+            CODE    01C4H     000CH     UNIT         ?C_C51STARTUP
+
+
+
+OVERLAY MAP OF MODULE:   .\Objects\configtimer0 interrupt (CONFIGTIMER0_INTERRUPT)
+
+
+SEGMENT                                          DATA_GROUP 
+  +--> CALLED SEGMENT                          START    LENGTH
+--------------------------------------------------------------
+?C_C51STARTUP                                  -----    -----
+  +--> ?PR?MAIN?CONFIGTIMER0_INTERRUPT
+
+?PR?MAIN?CONFIGTIMER0_INTERRUPT                -----    -----
+  +--> ?PR?_TIMER0INIT?CONFIGTIMER0_INTERRUPT
+
+?PR?_TIMER0INIT?CONFIGTIMER0_INTERRUPT         000CH    0004H
+
+
+
+SYMBOL TABLE OF MODULE:  .\Objects\configtimer0 interrupt (CONFIGTIMER0_INTERRUPT)
+
+BL51 BANKED LINKER/LOCATER V6.22                                                      03/31/2022  21:06:34  PAGE 2
+
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        CONFIGTIMER0_INTERRUPT
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+  B:00A8H.7       PUBLIC        EA
+  D:00A8H         PUBLIC        IE
+  D:00B8H         PUBLIC        IP
+  D:000AH         PUBLIC        T0RH
+  D:000BH         PUBLIC        T0RL
+  C:0003H         PUBLIC        main
+  C:01A5H         PUBLIC        Timer0
+  D:0098H         PUBLIC        SCON
+  D:0089H         PUBLIC        TMOD
+  D:0088H         PUBLIC        TCON
+  B:00A0H.0       PUBLIC        led
+  B:00A8H.1       PUBLIC        ET0
+  C:013EH         PUBLIC        _Timer0Init
+  D:008CH         PUBLIC        TH0
+  D:008AH         PUBLIC        TL0
+  B:0088H.4       PUBLIC        TR0
+  D:00C8H         PUBLIC        T2CON
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          _TIMER0INIT
+  D:0003H         SYMBOL        ms
+  -------         DO            
+  D:000CH         SYMBOL        tmp
+  -------         ENDDO         
+  C:013EH         LINE#         10
+  C:013EH         LINE#         11
+  C:013EH         LINE#         13
+  C:014AH         LINE#         14
+  C:016BH         LINE#         15
+  C:0181H         LINE#         16
+  C:018FH         LINE#         17
+  C:0192H         LINE#         19
+  C:0195H         LINE#         20
+  C:0198H         LINE#         21
+  C:019BH         LINE#         22
+  C:019EH         LINE#         24
+  C:01A0H         LINE#         25
+  C:01A2H         LINE#         26
+  C:01A4H         LINE#         27
+  -------         ENDPROC       _TIMER0INIT
+  -------         PROC          MAIN
+  C:0003H         LINE#         29
+  C:0003H         LINE#         30
+  C:0003H         LINE#         31
+  C:0008H         LINE#         32
+  -------         ENDPROC       MAIN
+  -------         PROC          TIMER0
+  -------         DO            
+  D:0008H         SYMBOL        i
+  -------         ENDDO         
+BL51 BANKED LINKER/LOCATER V6.22                                                      03/31/2022  21:06:34  PAGE 3
+
+
+  C:01A5H         LINE#         35
+  C:01A7H         LINE#         38
+  C:01AAH         LINE#         39
+  C:01ADH         LINE#         40
+  C:01B5H         LINE#         41
+  C:01BBH         LINE#         42
+  C:01BBH         LINE#         43
+  C:01BFH         LINE#         44
+  C:01C1H         LINE#         45
+  C:01C1H         LINE#         46
+  -------         ENDPROC       TIMER0
+  -------         ENDMOD        CONFIGTIMER0_INTERRUPT
+
+  -------         MODULE        ?C?LMUL
+  C:000EH         PUBLIC        ?C?LMUL
+  -------         ENDMOD        ?C?LMUL
+
+  -------         MODULE        ?C?ULDIV
+  C:0099H         PUBLIC        ?C?ULDIV
+  -------         ENDMOD        ?C?ULDIV
+
+  -------         MODULE        ?C?ULSHR
+  C:012BH         PUBLIC        ?C?ULSHR
+  -------         ENDMOD        ?C?ULSHR
+
+Program Size: data=17.0 xdata=0 code=463
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

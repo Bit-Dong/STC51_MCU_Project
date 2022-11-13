@@ -1,0 +1,90 @@
+C51 COMPILER V9.54   CONFIGTIMER0MODE3                                                     03/31/2022 15:59:40 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE CONFIGTIMER0MODE3
+OBJECT MODULE PLACED IN .\Objects\ConfigTimer0Mode3.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE ConfigTimer0Mode3.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\
+                    -Listings\ConfigTimer0Mode3.lst) TABS(2) OBJECT(.\Objects\ConfigTimer0Mode3.obj)
+
+line level    source
+
+   1          // Mode3的两个定时器分别定时控制 两led灯状态翻转
+   2          
+   3          #include<reg52.h>
+   4                                //Mode3 只适用于定时器T0  双8bit定时器 分成了两个定时器TL0、TH0
+   5          sbit led0=P2^0;
+   6          sbit led1=P2^1;
+   7          unsigned char T0RH,T0RL;
+   8          
+   9          void ConfigTimer0Mode3(unsigned int usL,unsigned int usH)      //1<=us<=268us  微妙
+  10          {
+  11   1        unsigned long tmp;
+  12   1        if(usL>267)
+  13   1          usL=267;
+  14   1        if(usH>267)
+  15   1          usH=267;
+  16   1      //配置第一个定时器
+  17   1        tmp=11059200/12;
+  18   1        tmp=(tmp*usL)/1000000;
+  19   1        tmp=256-tmp;             //初值
+  20   1        T0RL=tmp;
+  21   1      //配置第二个定时器
+  22   1        tmp=11059200/12;
+  23   1        tmp=(tmp*usH)/1000000;
+  24   1        tmp=256-tmp;
+  25   1        T0RH=tmp;
+  26   1        
+  27   1        TMOD &=0xf0;         //防止影响定时器T1的高四位
+  28   1        TMOD |=0x03;
+  29   1        TL0=T0RL;           //设定定时时间
+  30   1        TH0=T0RH;
+  31   1        TR0=1;             //启动第一个定时器
+  32   1        TR1=1;              //启动第二个定时器
+  33   1      }
+  34          
+  35          void main()
+  36          {
+  37   1        unsigned int cntL,cntH;
+  38   1        ConfigTimer0Mode3(200,100);        //各设定200us、100us
+  39   1        while(1)
+  40   1        {
+  41   2          if(TF0==1)
+  42   2          {
+  43   3            cntL++;
+  44   3            if(cntL>=5000)               //5000*200=1000000us=1s
+  45   3            {
+  46   4              cntL=0;
+  47   4              led0=~led0;
+  48   4            }
+  49   3            TF0=0;
+  50   3            TL0=T0RL;
+  51   3          }
+  52   2          if(TF1==1)
+  53   2          {
+  54   3            cntH++;
+C51 COMPILER V9.54   CONFIGTIMER0MODE3                                                     03/31/2022 15:59:40 PAGE 2   
+
+  55   3            if(cntH>=5000)            //5000*100=500000us=0.5s
+  56   3            {
+  57   4              cntH=0;
+  58   4              led1=~led1;
+  59   4            }
+  60   3            TF1=0;
+  61   3            TH0=T0RH;
+  62   3          }
+  63   2        }
+  64   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    280    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      2      10
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,195 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        03/31/2022  15:53:27  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+C:\KEIL_V5\C51\BIN\BL51.EXE .\Objects\Simplify ConfigTimer0Mode1.obj TO .\Objects\Simplify ConfigTimer0Mode1 PRINT (.\Li
+>> stings\Simplify ConfigTimer0Mode1.m51) RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  .\Objects\Simplify ConfigTimer0Mode1.obj (SIMPLIFY_CONFIGTIMER0MODE1)
+  C:\KEIL_V5\C51\LIB\C51S.LIB (?C_STARTUP)
+  C:\KEIL_V5\C51\LIB\C51S.LIB (?C?LMUL)
+  C:\KEIL_V5\C51\LIB\C51S.LIB (?C?ULDIV)
+  C:\KEIL_V5\C51\LIB\C51S.LIB (?C?ULSHR)
+
+
+LINK MAP OF MODULE:  .\Objects\Simplify ConfigTimer0Mode1 (SIMPLIFY_CONFIGTIMER0MODE1)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0006H     UNIT         _DATA_GROUP_
+            DATA    000EH     0002H     UNIT         ?DT?SIMPLIFY_CONFIGTIMER0MODE1
+            IDATA   0010H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     0130H     UNIT         ?C?LIB_CODE
+            CODE    0133H     0063H     UNIT         ?PR?_CONFIGTIMER0?SIMPLIFY_CONFIGTIMER0MODE1
+            CODE    0196H     0036H     UNIT         ?PR?MAIN?SIMPLIFY_CONFIGTIMER0MODE1
+            CODE    01CCH     000EH     UNIT         ?PR?DELAY1000MS?SIMPLIFY_CONFIGTIMER0MODE1
+            CODE    01DAH     000CH     UNIT         ?C_C51STARTUP
+            CODE    01E6H     000AH     UNIT         ?PR?DELAY1MS?SIMPLIFY_CONFIGTIMER0MODE1
+
+
+
+OVERLAY MAP OF MODULE:   .\Objects\Simplify ConfigTimer0Mode1 (SIMPLIFY_CONFIGTIMER0MODE1)
+
+
+SEGMENT                                            DATA_GROUP 
+  +--> CALLED SEGMENT                            START    LENGTH
+----------------------------------------------------------------
+?C_C51STARTUP                                    -----    -----
+  +--> ?PR?MAIN?SIMPLIFY_CONFIGTIMER0MODE1
+
+?PR?MAIN?SIMPLIFY_CONFIGTIMER0MODE1              0008H    0002H
+  +--> ?PR?_CONFIGTIMER0?SIMPLIFY_CONFIGTIME...
+  +--> ?PR?DELAY1000MS?SIMPLIFY_CONFIGTIMER0...
+
+?PR?_CONFIGTIMER0?SIMPLIFY_CONFIGTIME...         000AH    0004H
+
+
+
+SYMBOL TABLE OF MODULE:  .\Objects\Simplify ConfigTimer0Mode1 (SIMPLIFY_CONFIGTIMER0MODE1)
+
+BL51 BANKED LINKER/LOCATER V6.22                                                      03/31/2022  15:53:27  PAGE 2
+
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        SIMPLIFY_CONFIGTIMER0MODE1
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+  C:01E6H         PUBLIC        Delay1ms
+  D:00A8H         PUBLIC        IE
+  C:0133H         PUBLIC        _ConfigTimer0
+  C:01CCH         PUBLIC        Delay1000ms
+  D:00B8H         PUBLIC        IP
+  B:0090H.5       PUBLIC        beep
+  D:000EH         PUBLIC        T0RH
+  D:000FH         PUBLIC        T0RL
+  C:0196H         PUBLIC        main
+  D:0098H         PUBLIC        SCON
+  D:0089H         PUBLIC        TMOD
+  D:0088H         PUBLIC        TCON
+  B:00A0H.0       PUBLIC        led
+  B:0088H.5       PUBLIC        TF0
+  D:008CH         PUBLIC        TH0
+  D:008AH         PUBLIC        TL0
+  B:0088H.4       PUBLIC        TR0
+  D:00C8H         PUBLIC        T2CON
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          DELAY1MS
+  -------         DO            
+  D:0007H         SYMBOL        i
+  D:0006H         SYMBOL        j
+  -------         ENDDO         
+  C:01E6H         LINE#         11
+  C:01E6H         LINE#         12
+  C:01E6H         LINE#         15
+  C:01E7H         LINE#         16
+  C:01E9H         LINE#         17
+  C:01EBH         LINE#         19
+  C:01EBH         LINE#         20
+  C:01EDH         LINE#         21
+  C:01EFH         LINE#         22
+  -------         ENDPROC       DELAY1MS
+  -------         PROC          DELAY1000MS
+  -------         DO            
+  D:0007H         SYMBOL        i
+  D:0006H         SYMBOL        j
+  D:0005H         SYMBOL        k
+  -------         ENDDO         
+  C:01CCH         LINE#         24
+  C:01CCH         LINE#         25
+  C:01CCH         LINE#         28
+  C:01CDH         LINE#         29
+  C:01CFH         LINE#         30
+  C:01D1H         LINE#         31
+  C:01D3H         LINE#         33
+  C:01D3H         LINE#         35
+  C:01D3H         LINE#         36
+BL51 BANKED LINKER/LOCATER V6.22                                                      03/31/2022  15:53:27  PAGE 3
+
+
+  C:01D5H         LINE#         37
+  C:01D7H         LINE#         38
+  C:01D9H         LINE#         39
+  -------         ENDPROC       DELAY1000MS
+  -------         PROC          _CONFIGTIMER0
+  D:0003H         SYMBOL        ms
+  -------         DO            
+  D:000AH         SYMBOL        tmp
+  -------         ENDDO         
+  C:0133H         LINE#         42
+  C:0133H         LINE#         43
+  C:0133H         LINE#         45
+  C:013FH         LINE#         46
+  C:0160H         LINE#         47
+  C:0176H         LINE#         48
+  C:0184H         LINE#         49
+  C:0187H         LINE#         51
+  C:018AH         LINE#         52
+  C:018DH         LINE#         53
+  C:0190H         LINE#         54
+  C:0193H         LINE#         55
+  C:0195H         LINE#         56
+  -------         ENDPROC       _CONFIGTIMER0
+  -------         PROC          MAIN
+  -------         DO            
+  D:0008H         SYMBOL        cnt
+  -------         ENDDO         
+  C:0196H         LINE#         58
+  C:0196H         LINE#         59
+  C:0196H         LINE#         60
+  C:019BH         LINE#         61
+  C:01A0H         LINE#         62
+  C:01A0H         LINE#         63
+  C:01A0H         LINE#         64
+  C:01A3H         LINE#         65
+  C:01A3H         LINE#         66
+  C:01ABH         LINE#         67
+  C:01ADH         LINE#         68
+  C:01B0H         LINE#         69
+  C:01B3H         LINE#         70
+  C:01B5H         LINE#         71
+  C:01C0H         LINE#         72
+  C:01C0H         LINE#         73
+  C:01C5H         LINE#         74
+  C:01C7H         LINE#         76
+  C:01CAH         LINE#         77
+  C:01CAH         LINE#         79
+  C:01CAH         LINE#         80
+  -------         ENDPROC       MAIN
+  -------         ENDMOD        SIMPLIFY_CONFIGTIMER0MODE1
+
+  -------         MODULE        ?C?LMUL
+  C:0003H         PUBLIC        ?C?LMUL
+  -------         ENDMOD        ?C?LMUL
+
+  -------         MODULE        ?C?ULDIV
+  C:008EH         PUBLIC        ?C?ULDIV
+BL51 BANKED LINKER/LOCATER V6.22                                                      03/31/2022  15:53:27  PAGE 4
+
+
+  -------         ENDMOD        ?C?ULDIV
+
+  -------         MODULE        ?C?ULSHR
+  C:0120H         PUBLIC        ?C?ULSHR
+  -------         ENDMOD        ?C?ULSHR
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?DELAY1MS?SIMPLIFY_CONFIGTIMER0MODE1
+
+Program Size: data=17.0 xdata=0 code=496
+LINK/LOCATE RUN COMPLETE.  1 WARNING(S),  0 ERROR(S)
