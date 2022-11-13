@@ -1,0 +1,78 @@
+C51 COMPILER V9.54   DIGITAL_TUBE                                                          03/31/2022 19:16:07 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE DIGITAL_TUBE
+OBJECT MODULE PLACED IN .\Objects\Digital tube.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE Digital tube.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listi
+                    -ngs\Digital tube.lst) TABS(2) OBJECT(.\Objects\Digital tube.obj)
+
+line level    source
+
+   1          //从左至右显示76543210
+   2          
+   3          #include<reg52.h>
+   4          
+   5          typedef unsigned char u8;
+   6          typedef unsigned int u16;
+   7          
+   8          sbit LSA=P2^2; //74LS138 进行位选 的三个引脚
+   9          sbit LSB=P2^3;
+  10          sbit LSC=P2^4;
+  11          
+  12          u8 code smg[]={0x3f  , 0x06 , 0x5b , 0x4f , 0x66 , 0x6d ,0x7d , 0x07 , 0x7f  , 0x6f , 0x77 , 0x7c ,0x39 , 
+             -0x5e , 0x79 , 0x71};
+  13          //段选0-F
+  14          
+  15          void delay(u16 i)
+  16          {
+  17   1         while(i--);
+  18   1      }
+  19          
+  20          //数码管位选
+  21          void choice(u8 i)
+  22          {
+  23   1        switch(i)
+  24   1        {
+  25   2          case(0):LSA=0;LSB=0;LSC=0;break;   
+  26   2          case(1):LSA=1;LSB=0;LSC=0;break;
+  27   2          case(2):LSA=0;LSB=1;LSC=0;break;
+  28   2          case(3):LSA=1;LSB=1;LSC=0;break;
+  29   2          case(4):LSA=0;LSB=0;LSC=1;break;
+  30   2          case(5):LSA=1;LSB=0;LSC=1;break;
+  31   2          case(6):LSA=0;LSB=1;LSC=1;break;
+  32   2          case(7):LSA=1;LSB=1;LSC=1;break;
+  33   2      
+  34   2        }
+  35   1      }
+  36          
+  37          void main()
+  38          {
+  39   1            u8 i;
+  40   1         while(1)
+  41   1        {
+  42   2            for(i=0;i<8;i++)
+  43   2          {
+  44   3            choice(i);
+  45   3            P0=smg[i];        //接收段选数据
+  46   3            delay(60000);       //延迟 利用视觉暂留效应
+  47   3            P0=0x00;          //消隐 避免上一次的数据残留
+  48   3          }
+  49   2        }
+  50   1      }
+  51          
+
+
+C51 COMPILER V9.54   DIGITAL_TUBE                                                          03/31/2022 19:16:07 PAGE 2   
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    122    ----
+   CONSTANT SIZE    =     16    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

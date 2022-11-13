@@ -1,0 +1,3 @@
+".\Objects\External Interrupt INT0.obj" 
+TO ".\Objects\External Interrupt INT0" 
+PRINT(".\Listings\External Interrupt INT0.m51") RAMSIZE(256) 

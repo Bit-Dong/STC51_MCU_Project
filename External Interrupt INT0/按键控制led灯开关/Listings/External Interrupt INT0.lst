@@ -1,0 +1,72 @@
+C51 COMPILER V9.54   EXTERNAL_INTERRUPT_INT0                                               04/02/2022 13:08:56 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE EXTERNAL_INTERRUPT_INT0
+OBJECT MODULE PLACED IN .\Objects\External Interrupt INT0.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE External Interrupt INT0.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PR
+                    -INT(.\Listings\External Interrupt INT0.lst) TABS(2) OBJECT(.\Objects\External Interrupt INT0.obj)
+
+line level    source
+
+   1          //实现按键按下 开/关led灯
+   2          //外部中断0 对应按键引脚为P3^2
+   3          //外部中断1 对应按键引脚为P3^3
+   4          
+   5          #include <reg52.h>
+   6          
+   7          typedef unsigned char u8;
+   8          typedef unsigned int u16; 
+   9                         
+  10          
+  11          sbit key = P3^2; //定义外部中断按键引脚
+  12          sbit LED = P2^2; 
+  13          
+  14          //配置外部中部中断0
+  15          void initInterrupt0()
+  16          {
+  17   1        //IE0 = 1;      //IE1和IE0为状态位，即表示CPU对当前的中断执行状态，一般无需手动设置。
+  18   1                      //需要设置的是寄存器位是IT0，以选择低电平信号触发还是负跳变信号触发
+  19   1        EX0 = 1;
+  20   1        IT0 = 1;
+  21   1        EA  = 1;
+  22   1      }
+  23          
+  24          //延迟函数
+  25          void delay(u16 i)
+  26          {
+  27   1        while(i--);
+  28   1      }
+  29          
+  30          void main()
+  31          {
+  32   1        while(1)
+  33   1        {
+  34   2          initInterrupt0(); //调用中断
+  35   2        }
+  36   1      }
+  37          
+  38          //发生中断执行函数
+  39          void interruptHandler() interrupt 0
+  40          {
+  41   1        delay(1000);  //消抖作用
+  42   1        if(key==0)  //
+  43   1        {
+  44   2          LED = ~LED;    //开灯/关灯
+  45   2        }
+  46   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     59    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+C51 COMPILER V9.54   EXTERNAL_INTERRUPT_INT0                                               04/02/2022 13:08:56 PAGE 2   
+
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

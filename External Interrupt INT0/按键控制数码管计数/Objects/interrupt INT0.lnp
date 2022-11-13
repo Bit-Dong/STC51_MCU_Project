@@ -1,0 +1,3 @@
+".\Objects\interrupt INT0.obj" 
+TO ".\Objects\interrupt INT0" 
+PRINT(".\Listings\interrupt INT0.m51") RAMSIZE(256) 
