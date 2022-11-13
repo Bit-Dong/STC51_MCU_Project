@@ -1,0 +1,4 @@
+".\Objects\fdkl.obj",
+".\Objects\lcd1602.obj" 
+TO ".\Objects\fdkl" 
+PRINT(".\Listings\fdkl.m51") RAMSIZE(256) 
