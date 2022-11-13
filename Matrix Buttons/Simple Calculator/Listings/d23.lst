@@ -1,0 +1,303 @@
+C51 COMPILER V9.54   D23                                                                   04/05/2022 14:10:30 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE D23
+OBJECT MODULE PLACED IN .\Objects\d23.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE d23.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\d23.l
+                    -st) TABS(2) OBJECT(.\Objects\d23.obj)
+
+line level    source
+
+   1          /*    简单计算器:
+   2          
+   3                                 4x4矩阵按键分布
+   4                                0    1    2    3
+   5                                4    5    6    7
+   6                                8    9    +    -
+   7                                *    /   RES   =
+   8          */
+   9          
+  10          #include<reg52.h>
+  11          #define key P1   //定义key为矩阵按键P1口
+  12          #define dig P0   //定义dig为数码管P0口
+  13          typedef unsigned char u8;
+  14          typedef unsigned int u16;
+  15          sbit LSA=P2^2;  //74LS138位选
+  16          sbit LSB=P2^3;
+  17          sbit LSC=P2^4;
+  18          u16 keyvalue;  //存键值
+  19          u16 keyswitch; //判断是否按下按键
+  20          u8 code duanxuan[]={0x3f,0x06,0x5b,0x4f,0x66,0x6d,0x7d,0x07,0x7f,0x6f,0x77,0x7c,0x39,0x5e,0x79,0x71};   //
+             -段选0-F
+  21          u16 box[8]={0};
+  22          u16 i;
+  23          
+  24          //延迟函数
+  25          void delay(u16 i)
+  26          {
+  27   1        while(i--);
+  28   1      }
+  29          
+  30          //输出函数(把值显示在数码管上)
+  31          void display()
+  32          {
+  33   1        LSA=0;LSB=0;LSC=0;
+  34   1        dig=duanxuan[box[0]];
+  35   1        delay(50);dig=0x00;    //使动态数码管消隐
+  36   1        
+  37   1        LSA=1;LSB=0;LSC=0;
+  38   1        dig=duanxuan[box[1]];
+  39   1        delay(50);dig=0x00;    //使动态数码管消隐
+  40   1        
+  41   1        LSA=0;LSB=1;LSC=0;
+  42   1        dig=duanxuan[box[2]];
+  43   1        delay(50);dig=0x00;    //使动态数码管消隐
+  44   1        
+  45   1        LSA=1;LSB=1;LSC=0;
+  46   1        dig=duanxuan[box[3]];
+  47   1        delay(50);dig=0x00;    //使动态数码管消隐
+  48   1        
+  49   1        LSA=0;LSB=0;LSC=1;
+  50   1        dig=duanxuan[box[4]];
+  51   1        delay(50);dig=0x00;    //使动态数码管消隐
+  52   1        
+  53   1        LSA=1;LSB=0;LSC=1;
+C51 COMPILER V9.54   D23                                                                   04/05/2022 14:10:30 PAGE 2   
+
+  54   1        dig=duanxuan[box[5]];
+  55   1        delay(50);dig=0x00;    //使动态数码管消隐
+  56   1        
+  57   1        LSA=0;LSB=1;LSC=1;
+  58   1        dig=duanxuan[box[6]];
+  59   1        delay(50);dig=0x00;    //使动态数码管消隐
+  60   1        
+  61   1        LSA=1;LSB=1;LSC=1;
+  62   1        dig=duanxuan[box[7]];
+  63   1        delay(50);dig=0x00;    //使动态数码管消隐
+  64   1      }
+  65          
+  66          //扫码函数(扫描矩阵按键)
+  67          void keydown()
+  68          {
+  69   1        u16 a=0;
+  70   1        key=0x0f;
+  71   1        if(key!=0x0f)
+  72   1        {
+  73   2          delay(1000);
+  74   2          if(key!=0x0f)
+  75   2          {
+  76   3            key=0x0f;
+  77   3            switch(key)
+  78   3            {
+  79   4              case 0x07 : keyvalue=0;break;
+  80   4              case 0x0b : keyvalue=1;break;
+  81   4              case 0x0d : keyvalue=2;break;
+  82   4              case 0x0e : keyvalue=3;break;
+  83   4            }
+  84   3            key=0xf0;
+  85   3            switch(key)
+  86   3            {
+  87   4              case 0x70 : keyvalue=keyvalue;break;
+  88   4              case 0xb0 : keyvalue=keyvalue+4;break;
+  89   4              case 0xd0 : keyvalue=keyvalue+8;break;
+  90   4              case 0xe0 : keyvalue=keyvalue+12;break;
+  91   4            }
+  92   3            if((keyvalue>=0)&&(keyvalue<=9))
+  93   3            {
+  94   4              keyswitch=1;
+  95   4            }
+  96   3            while((a<100)&&(key!=0xf0))
+  97   3            {
+  98   4              delay(1000);
+  99   4              a++;
+ 100   4            }
+ 101   3          }
+ 102   2        }
+ 103   1      }
+ 104          
+ 105          //主函数
+ 106          void main()
+ 107          {
+ 108   1        unsigned long  a=0,b=0,c=0;
+ 109   1        while(1)
+ 110   1        {
+ 111   2          display();
+ 112   2          
+ 113   2          keydown();
+ 114   2          if(keyswitch==1)  
+ 115   2          {
+C51 COMPILER V9.54   D23                                                                   04/05/2022 14:10:30 PAGE 3   
+
+ 116   3            for(i=7;i>0;i--)
+ 117   3            {
+ 118   4              box[i]=box[i-1];       //使按键输入的数字从左至右显示在数码管上
+ 119   4            }
+ 120   3            box[0]=keyvalue;
+ 121   3            keyswitch=0;
+ 122   3          }
+ 123   2          else if(keyvalue==14)      //按键14为清零键
+ 124   2          {
+ 125   3            for(i=0;i<8;i++)
+ 126   3               box[i]=0;
+ 127   3            display();
+ 128   3          }
+ 129   2          else if(keyvalue==10)      //按键10为加号‘+’
+ 130   2          {
+ 131   3            a=box[0]+box[1]*10+box[2]*100+box[3]*1000+box[4]*10000+box[5]*100000+box[6]*1000000+box[7]*10000000;
+ 132   3                            //使按下的第一个数的值存入a；
+ 133   3            for(i=0;i<8;i++)
+ 134   3               box[i]=0;
+ 135   3            while(1)
+ 136   3            {
+ 137   4              display();
+ 138   4              keydown();
+ 139   4              if(keyswitch==1)
+ 140   4              {
+ 141   5                for(i=7;i>0;i--)
+ 142   5                {
+ 143   6                  box[i]=box[i-1];
+ 144   6                }
+ 145   5                box[0]=keyvalue;
+ 146   5                keyswitch=0;
+ 147   5              }
+ 148   4              if(keyvalue==15)    //按键15为等于符号'='
+ 149   4                break;   
+ 150   4            }
+ 151   3            b=box[0]+box[1]*10+box[2]*100+box[3]*1000+box[4]*10000+box[5]*100000+box[6]*1000000+box[7]*10000000;
+ 152   3                             //使按下的第二个数的值存入b；
+ 153   3            c=a+b;
+ 154   3            box[0]=c%10;
+ 155   3            box[1]=c/10%10;
+ 156   3            box[2]=c/100%10;
+ 157   3            box[3]=c/1000%10;
+ 158   3            box[4]=c/10000%10;
+ 159   3            box[5]=c/100000%10;
+ 160   3            box[6]=c/1000000%10;
+ 161   3            box[7]=c/10000000%10;
+ 162   3            display();
+ 163   3          }
+ 164   2          else if(keyvalue==11)      //按键11为加号‘-’
+ 165   2          {
+ 166   3            a=box[0]+box[1]*10+box[2]*100+box[3]*1000+box[4]*10000+box[5]*100000+box[6]*1000000+box[7]*10000000;
+ 167   3                            //使按下的第一个数的值存入a；
+ 168   3            for(i=0;i<8;i++)
+ 169   3               box[i]=0;
+ 170   3            while(1)
+ 171   3            {
+ 172   4              display();
+ 173   4              keydown();
+ 174   4              if(keyswitch==1)
+ 175   4              {
+ 176   5                for(i=7;i>0;i--)
+ 177   5                {
+C51 COMPILER V9.54   D23                                                                   04/05/2022 14:10:30 PAGE 4   
+
+ 178   6                  box[i]=box[i-1];
+ 179   6                }
+ 180   5                box[0]=keyvalue;
+ 181   5                keyswitch=0;
+ 182   5              }
+ 183   4              if(keyvalue==15)    //按键15为等于符号'='
+ 184   4                break;   
+ 185   4            }
+ 186   3            b=box[0]+box[1]*10+box[2]*100+box[3]*1000+box[4]*10000+box[5]*100000+box[6]*1000000+box[7]*10000000;
+ 187   3                             //使按下的第二个数的值存入b；
+ 188   3            c=a-b;
+ 189   3            box[0]=c%10;
+ 190   3            box[1]=c/10%10;
+ 191   3            box[2]=c/100%10;
+ 192   3            box[3]=c/1000%10;
+ 193   3            box[4]=c/10000%10;
+ 194   3            box[5]=c/100000%10;
+ 195   3            box[6]=c/1000000%10;
+ 196   3            box[7]=c/10000000%10;
+ 197   3            display();
+ 198   3          }
+ 199   2          else if(keyvalue==12)      //按键12为加号‘*’
+ 200   2          {
+ 201   3            a=box[0]+box[1]*10+box[2]*100+box[3]*1000+box[4]*10000+box[5]*100000+box[6]*1000000+box[7]*10000000;
+ 202   3                            //使按下的第一个数的值存入a；
+ 203   3            for(i=0;i<8;i++)
+ 204   3               box[i]=0;
+ 205   3            while(1)
+ 206   3            {
+ 207   4              display();
+ 208   4              keydown();
+ 209   4              if(keyswitch==1)
+ 210   4              {
+ 211   5                for(i=7;i>0;i--)
+ 212   5                {
+ 213   6                  box[i]=box[i-1];
+ 214   6                }
+ 215   5                box[0]=keyvalue;
+ 216   5                keyswitch=0;
+ 217   5              }
+ 218   4              if(keyvalue==15)    //按键15为等于符号'='
+ 219   4                break;   
+ 220   4            }
+ 221   3            b=box[0]+box[1]*10+box[2]*100+box[3]*1000+box[4]*10000+box[5]*100000+box[6]*1000000+box[7]*10000000;
+ 222   3                             //使按下的第二个数的值存入b；
+ 223   3            c=a*b;
+ 224   3            box[0]=c%10;
+ 225   3            box[1]=c/10%10;
+ 226   3            box[2]=c/100%10;
+ 227   3            box[3]=c/1000%10;
+ 228   3            box[4]=c/10000%10;
+ 229   3            box[5]=c/100000%10;
+ 230   3            box[6]=c/1000000%10;
+ 231   3            box[7]=c/10000000%10;
+ 232   3            display();
+ 233   3          }
+ 234   2          else if(keyvalue==13)      //按键13为加号‘/’
+ 235   2          {
+ 236   3            a=box[0]+box[1]*10+box[2]*100+box[3]*1000+box[4]*10000+box[5]*100000+box[6]*1000000+box[7]*10000000;
+ 237   3                            //使按下的第一个数的值存入a；
+ 238   3            for(i=0;i<8;i++)
+ 239   3               box[i]=0;
+C51 COMPILER V9.54   D23                                                                   04/05/2022 14:10:30 PAGE 5   
+
+ 240   3            while(1)
+ 241   3            {
+ 242   4              display();
+ 243   4              keydown();
+ 244   4              if(keyswitch==1)
+ 245   4              {
+ 246   5                for(i=7;i>0;i--)
+ 247   5                {
+ 248   6                  box[i]=box[i-1];
+ 249   6                }
+ 250   5                box[0]=keyvalue;
+ 251   5                keyswitch=0;
+ 252   5              }
+ 253   4              if(keyvalue==15)    //按键15为等于符号'='
+ 254   4                break;   
+ 255   4            }
+ 256   3            b=box[0]+box[1]*10+box[2]*100+box[3]*1000+box[4]*10000+box[5]*100000+box[6]*1000000+box[7]*10000000;
+ 257   3                             //使按下的第二个数的值存入b；
+ 258   3            c=a/b;
+ 259   3            box[0]=c%10;
+ 260   3            box[1]=c/10%10;
+ 261   3            box[2]=c/100%10;
+ 262   3            box[3]=c/1000%10;
+ 263   3            box[4]=c/10000%10;
+ 264   3            box[5]=c/100000%10;
+ 265   3            box[6]=c/1000000%10;
+ 266   3            box[7]=c/10000000%10;
+ 267   3            display();
+ 268   3          }
+ 269   2        }
+ 270   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   3839    ----
+   CONSTANT SIZE    =     16    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     22      12
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
