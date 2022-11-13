@@ -1,0 +1,268 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        05/30/2022  11:52:03  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+D:\MDK\C51\BIN\BL51.EXE .\Objects\led1.obj, .\Objects\led0.obj, .\Objects\delay.obj TO .\Objects\main PRINT (.\Listings\
+>> main.m51) RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  .\Objects\led1.obj (LED1)
+  .\Objects\led0.obj (LED0)
+  .\Objects\delay.obj (DELAY)
+  D:\MDK\C51\LIB\C51S.LIB (?C_STARTUP)
+
+
+LINK MAP OF MODULE:  .\Objects\main (LED1)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0004H     UNIT         ?DT?ZHUANXIANG?LED0
+            DATA    000CH     0003H     UNIT         ?DT?JIAFA?LED0
+            DATA    000FH     0002H     UNIT         ?DT?LIUSHUIDENG?LED0
+            IDATA   0011H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     006BH     UNIT         ?PR?LIUSHUIDENG?LED0
+            CODE    006EH     0066H     UNIT         ?PR?ZHUANXIANG?LED0
+            CODE    00D4H     0050H     UNIT         ?PR?CHUANLIAN?LED0
+            CODE    0124H     0027H     UNIT         ?PR?JIAFA?LED0
+            CODE    014BH     0020H     UNIT         ?PR?_DELAY?DELAY
+            CODE    016BH     0014H     UNIT         ?PR?SHANSHUO?LED0
+            CODE    017FH     000CH     UNIT         ?C_C51STARTUP
+            CODE    018BH     0004H     UNIT         ?PR?DANHSHUDENGLIANG?LED0
+            CODE    018FH     0002H     UNIT         ?PR?MAIN?LED1
+
+
+
+OVERLAY MAP OF MODULE:   .\Objects\main (LED1)
+
+
+SEGMENT
+  +--> CALLED SEGMENT
+---------------------
+?C_C51STARTUP
+  +--> ?PR?MAIN?LED1
+
+
+
+SYMBOL TABLE OF MODULE:  .\Objects\main (LED1)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+BL51 BANKED LINKER/LOCATER V6.22                                                      05/30/2022  11:52:03  PAGE 2
+
+
+  -------         MODULE        LED1
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0090H         PUBLIC        P1
+  D:00B0H         PUBLIC        P3
+  D:00A8H         PUBLIC        IE
+  D:00B8H         PUBLIC        IP
+  C:018FH         PUBLIC        main
+  D:0098H         PUBLIC        SCON
+  D:0088H         PUBLIC        TCON
+  D:00C8H         PUBLIC        T2CON
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          MAIN
+  C:018FH         LINE#         12
+  C:018FH         LINE#         13
+  C:018FH         LINE#         14
+  C:018FH         LINE#         15
+  C:018FH         LINE#         22
+  -------         ENDPROC       MAIN
+  -------         ENDMOD        LED1
+
+  -------         MODULE        LED0
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0090H         PUBLIC        P1
+  D:00B0H         PUBLIC        P3
+  D:00A8H         PUBLIC        IE
+  D:00B8H         PUBLIC        IP
+  C:018BH         PUBLIC        danhshudengliang
+  C:0003H         PUBLIC        liushuideng
+  D:0098H         PUBLIC        SCON
+  D:0088H         PUBLIC        TCON
+  C:00D4H         PUBLIC        chuanlian
+  C:006EH         PUBLIC        zhuanxiang
+  B:0090H.0       PUBLIC        led1
+  D:00C8H         PUBLIC        T2CON
+  B:0090H.1       PUBLIC        led2
+  B:0090H.6       PUBLIC        led7
+  C:016BH         PUBLIC        shanshuo
+  B:0090H.7       PUBLIC        led8
+  D:00D0H         PUBLIC        PSW
+  B:00B0H.2       PUBLIC        key2
+  C:0124H         PUBLIC        jiafa
+  B:00B0H.3       PUBLIC        key3
+  -------         PROC          CHUANLIAN
+  C:00D4H         LINE#         6
+  C:00D4H         LINE#         7
+  C:00D4H         LINE#         9
+  C:00D7H         LINE#         10
+  C:00DEH         LINE#         11
+  C:00E1H         LINE#         12
+  C:00E8H         LINE#         13
+  C:00EBH         LINE#         14
+  C:00F2H         LINE#         15
+  C:00F5H         LINE#         16
+  C:00FCH         LINE#         18
+  C:00FFH         LINE#         19
+  C:0106H         LINE#         20
+  C:0109H         LINE#         21
+BL51 BANKED LINKER/LOCATER V6.22                                                      05/30/2022  11:52:03  PAGE 3
+
+
+  C:0110H         LINE#         22
+  C:0113H         LINE#         23
+  C:011AH         LINE#         24
+  C:011DH         LINE#         25
+  -------         ENDPROC       CHUANLIAN
+  -------         PROC          SHANSHUO
+  C:016BH         LINE#         29
+  C:016BH         LINE#         30
+  C:016BH         LINE#         32
+  C:016EH         LINE#         33
+  C:0175H         LINE#         34
+  C:0178H         LINE#         35
+  -------         ENDPROC       SHANSHUO
+  -------         PROC          DANHSHUDENGLIANG
+  C:018BH         LINE#         40
+  C:018BH         LINE#         41
+  C:018BH         LINE#         43
+  C:018EH         LINE#         45
+  -------         ENDPROC       DANHSHUDENGLIANG
+  -------         PROC          LIUSHUIDENG
+  -------         DO            
+  D:000FH         SYMBOL        i
+  -------         ENDDO         
+  C:0003H         LINE#         48
+  C:0003H         LINE#         49
+  C:0003H         LINE#         51
+  C:0006H         LINE#         52
+  C:000BH         LINE#         53
+  C:000BH         LINE#         54
+  C:0012H         LINE#         55
+  C:0022H         LINE#         56
+  C:0035H         LINE#         57
+  C:003AH         LINE#         58
+  C:003AH         LINE#         59
+  C:0041H         LINE#         60
+  C:0051H         LINE#         61
+  C:0064H         LINE#         62
+  C:0067H         LINE#         63
+  -------         ENDPROC       LIUSHUIDENG
+  -------         PROC          ZHUANXIANG
+  -------         DO            
+  D:0008H         SYMBOL        i
+  D:000AH         SYMBOL        j
+  -------         ENDDO         
+  C:006EH         LINE#         68
+  C:006EH         LINE#         69
+  C:006EH         LINE#         71
+  C:0071H         LINE#         72
+  C:0074H         LINE#         73
+  C:0074H         LINE#         74
+  C:0076H         LINE#         75
+  C:0078H         LINE#         76
+  C:007DH         LINE#         77
+  C:007DH         LINE#         78
+  C:0084H         LINE#         79
+  C:0086H         LINE#         80
+  C:0088H         LINE#         81
+BL51 BANKED LINKER/LOCATER V6.22                                                      05/30/2022  11:52:03  PAGE 4
+
+
+  C:008FH         LINE#         82
+  C:00A2H         LINE#         83
+  C:00A2H         LINE#         84
+  C:00A5H         LINE#         85
+  C:00A5H         LINE#         86
+  C:00A7H         LINE#         87
+  C:00A9H         LINE#         88
+  C:00AEH         LINE#         89
+  C:00AEH         LINE#         90
+  C:00B5H         LINE#         91
+  C:00B7H         LINE#         92
+  C:00B9H         LINE#         93
+  C:00C0H         LINE#         94
+  C:00D3H         LINE#         95
+  C:00D3H         LINE#         96
+  -------         ENDPROC       ZHUANXIANG
+  -------         PROC          JIAFA
+  -------         DO            
+  D:000CH         SYMBOL        i
+  D:000EH         SYMBOL        N
+  -------         ENDDO         
+  C:0124H         LINE#         99
+  C:0124H         LINE#         100
+  C:0124H         LINE#         102
+  C:0127H         LINE#         103
+  C:012BH         LINE#         104
+  C:012BH         LINE#         105
+  C:012DH         LINE#         106
+  C:0132H         LINE#         107
+  C:0139H         LINE#         108
+  C:014AH         LINE#         109
+  -------         ENDPROC       JIAFA
+  -------         ENDMOD        LED0
+
+  -------         MODULE        DELAY
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0090H         PUBLIC        P1
+  D:00B0H         PUBLIC        P3
+  D:00A8H         PUBLIC        IE
+  C:014BH         PUBLIC        _delay
+  D:00B8H         PUBLIC        IP
+  D:0098H         PUBLIC        SCON
+  D:0088H         PUBLIC        TCON
+  D:00C8H         PUBLIC        T2CON
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          _DELAY
+  D:0006H         SYMBOL        k
+  -------         DO            
+  D:0004H         SYMBOL        i
+  D:0002H         SYMBOL        j
+  -------         ENDDO         
+  C:014BH         LINE#         4
+  C:014BH         LINE#         5
+  C:014BH         LINE#         7
+  C:0155H         LINE#         8
+  C:0155H         LINE#         9
+  C:0163H         LINE#         11
+BL51 BANKED LINKER/LOCATER V6.22                                                      05/30/2022  11:52:03  PAGE 5
+
+
+  C:016AH         LINE#         12
+  -------         ENDPROC       _DELAY
+  -------         ENDMOD        DELAY
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?CHUANLIAN?LED0
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SHANSHUO?LED0
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?DANHSHUDENGLIANG?LED0
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?LIUSHUIDENG?LED0
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?ZHUANXIANG?LED0
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?JIAFA?LED0
+
+Program Size: data=18.0 xdata=0 code=401
+LINK/LOCATE RUN COMPLETE.  6 WARNING(S),  0 ERROR(S)

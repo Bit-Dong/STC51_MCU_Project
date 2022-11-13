@@ -1,0 +1,51 @@
+C51 COMPILER V9.54   LED1                                                                  05/30/2022 11:52:03 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE LED1
+OBJECT MODULE PLACED IN .\Objects\led1.obj
+COMPILER INVOKED BY: D:\MDK\C51\BIN\C51.EXE led1.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\led1.lst
+                    -) TABS(2) OBJECT(.\Objects\led1.obj)
+
+line level    source
+
+   1          //① 点亮第一个发光管
+   2          //② 点亮最后一个发光管
+   3          //③ 点亮1、3、5、7发光管
+   4          //④ 点亮2、4、5、6发光管
+   5          //⑤ 让一个发光管闪烁
+   6          //⑥ 实现简单流水灯效果
+   7          
+   8          #include<reg52.h>
+   9          #include"led0.h"
+  10          #include"delay.h"
+  11          
+  12          void main()
+  13          {
+  14   1      while(1)
+  15   1      {
+  16   2      //zhuanxiang(); 
+  17   2      //danhshudengliang();
+  18   2      //shanshuo();
+  19   2      //chuanglian();
+  20   2      //liushuideng();
+  21   2      //jiafa();
+  22   2      }
+  23   1        
+  24   1      }
+  25          
+  26          
+  27            
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =      2    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

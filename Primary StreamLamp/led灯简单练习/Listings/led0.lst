@@ -1,0 +1,138 @@
+C51 COMPILER V9.54   LED0                                                                  05/30/2022 11:52:03 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE LED0
+OBJECT MODULE PLACED IN .\Objects\led0.obj
+COMPILER INVOKED BY: D:\MDK\C51\BIN\C51.EXE led0.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\led0.lst
+                    -) TABS(2) OBJECT(.\Objects\led0.obj)
+
+line level    source
+
+   1          #include<reg52.h>
+   2          #include"led0.h"
+   3          #include"delay.h"
+   4          
+   5          //led窗帘
+   6          void chuanlian()
+   7          {
+   8   1      
+   9   1        led=0x7e;
+  10   1        delay(500);
+  11   1        led=0x3c;
+  12   1        delay(500);
+  13   1        led=0x18;
+  14   1        delay(500);
+  15   1        led=0x00;
+  16   1        delay(500);
+  17   1        
+  18   1        led=0x00;
+  19   1        delay(500);
+  20   1        led=0x18;
+  21   1        delay(500);
+  22   1        led=0x3c;
+  23   1        delay(500);
+  24   1        led=0x7e;
+  25   1        delay(500);
+  26   1      }
+  27          
+  28          //四个灯闪烁
+  29          void shanshuo()
+  30          {
+  31   1          
+  32   1        led=0xaa;
+  33   1        delay(500);
+  34   1        led=0xff;
+  35   1        delay(500);
+  36   1      
+  37   1      }
+  38          
+  39          //1357灯亮
+  40          void danhshudengliang()
+  41          {
+  42   1          
+  43   1        led=0xaa;
+  44   1         
+  45   1      }
+  46          
+  47          //流水灯
+  48          void liushuideng()
+  49          {
+  50   1        int i;
+  51   1        led=0xfe;
+  52   1        for(i=0;i<7;i++)
+  53   1        {
+  54   2          delay(1000);
+C51 COMPILER V9.54   LED0                                                                  05/30/2022 11:52:03 PAGE 2   
+
+  55   2          led=(led<<1)|(led>>7);
+  56   2        }
+  57   1        for(i=0;i<8;i++)
+  58   1        {
+  59   2          delay(1000);
+  60   2          led=(led>>1)|(led<<7);
+  61   2        }
+  62   1        led=0xff;
+  63   1        delay(2000);
+  64   1      
+  65   1      }
+  66          
+  67          //独立按键key2、key3实现左右转向灯
+  68          void zhuanxiang()
+  69          {
+  70   1        int i,j;
+  71   1            led=0xff;
+  72   1            if(key2==0)
+  73   1            {
+  74   2                led1=1;
+  75   2                led2=1;
+  76   2                for(j=0;j<20;j++)
+  77   2              { 
+  78   3                delay(10);
+  79   3                led1=~led1;
+  80   3                led2=~led2;
+  81   3                delay(100);
+  82   3              }
+  83   2            }
+  84   1              if(key3==0)
+  85   1            {
+  86   2                led7=1;
+  87   2                led8=1;
+  88   2               for(j=0;j<20;j++)
+  89   2              { 
+  90   3                delay(10);
+  91   3                led7=~led7;
+  92   3                led8=~led8;
+  93   3                delay(100);
+  94   3              }
+  95   2            }
+  96   1      }
+*** WARNING C280 IN LINE 70 OF led0.c: 'i': unreferenced local variable
+  97          
+  98          //二进制加法
+  99          void jiafa()
+ 100          {
+ 101   1         unsigned int i;
+ 102   1         unsigned char N=0;
+ 103   1         for(i=0;i<100;i++ )
+ 104   1        {
+ 105   2          N++;
+ 106   2          led=~N;
+ 107   2          delay(300);
+ 108   2        }    
+ 109   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    352    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+C51 COMPILER V9.54   LED0                                                                  05/30/2022 11:52:03 PAGE 3   
+
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       9
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  1 WARNING(S),  0 ERROR(S)
