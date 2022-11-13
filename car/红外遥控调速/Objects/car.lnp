@@ -1,0 +1,10 @@
+".\Objects\car.obj",
+".\Objects\key.obj",
+".\Objects\delay.obj",
+".\Objects\smg.obj",
+".\Objects\time0.obj",
+".\Objects\Int0.obj",
+".\Objects\IR.obj",
+".\Objects\Timer0.obj" 
+TO ".\Objects\car" 
+PRINT(".\Listings\car.m51") RAMSIZE(256) 
